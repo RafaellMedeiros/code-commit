@@ -13,8 +13,10 @@ const TONE_CLASSES: Record<FeedbackTone, string> = {
 export function FeedbackMessage({ message, tone = 'success' }: FeedbackMessageProps) {
   if (!message) return null;
 
+  const liveRegionRole = tone === 'error' ? 'alert' : 'status';
+
   return (
-    <p role="status" className={`rounded-md border px-3 py-2 text-sm ${TONE_CLASSES[tone]}`}>
+    <p role={liveRegionRole} className={`rounded-md border px-3 py-2 text-sm ${TONE_CLASSES[tone]}`}>
       {message}
     </p>
   );

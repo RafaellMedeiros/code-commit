@@ -1,11 +1,10 @@
 import type { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import { APP_ROUTES } from '../../../constants/routes';
 import type { RegisterFieldErrors, RegisterFormValues, SocialAuthProvider } from '../../../types/auth';
 import { Button } from '../../atoms/Button';
-import { Checkbox } from '../../atoms/Checkbox';
 import { FeedbackMessage } from '../../atoms/FeedbackMessage';
 import { Icon } from '../../atoms/Icon';
+import { AuthCallToAction } from '../../molecules/AuthCallToAction';
 import { AuthFormHeader } from '../../molecules/AuthFormHeader';
 import { DividerWithLabel } from '../../molecules/DividerWithLabel';
 import { FormField } from '../../molecules/FormField';
@@ -20,7 +19,6 @@ export interface RegisterFormProps {
   onNameChange: (nextName: string) => void;
   onEmailChange: (nextEmail: string) => void;
   onPasswordChange: (nextPassword: string) => void;
-  onToggleRememberMe: () => void;
   onSocialRegisterClick: (provider: SocialAuthProvider) => void;
   onSubmitForm: (formEvent: FormEvent<HTMLFormElement>) => void;
 }
@@ -57,14 +55,6 @@ function RegisterFieldsForm(props: RegisterFormProps) {
         errorMessage={props.fieldErrors.password}
         onValueChange={props.onPasswordChange}
       />
-      <div className="pt-0.5">
-        <Checkbox
-          id="register-remember-me"
-          label="Lembrar-me"
-          isChecked={props.values.isRememberMeChecked}
-          onToggle={props.onToggleRememberMe}
-        />
-      </div>
       <FeedbackMessage
         message={props.feedbackMessage}
         tone={props.hasSubmissionError ? 'error' : 'success'}
@@ -78,21 +68,6 @@ function RegisterFieldsForm(props: RegisterFormProps) {
   );
 }
 
-function LoginCallToAction() {
-  return (
-    <footer className="mt-7 flex flex-wrap items-center justify-center gap-2 text-center">
-      <p className="text-base text-offwhite">Já tem conta?</p>
-      <Link
-        to={APP_ROUTES.LOGIN}
-        className="inline-flex items-center gap-2 text-lg font-normal text-highlight-green transition-colors hover:text-highlight-green-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight-green"
-      >
-        <span>Faça seu login!</span>
-        <Icon name="login" className="h-5 w-5" />
-      </Link>
-    </footer>
-  );
-}
-
 export function RegisterForm(props: RegisterFormProps) {
   return (
     <section aria-label="Formulário de cadastro" className="mx-auto w-full max-w-[390px]">
@@ -100,9 +75,14 @@ export function RegisterForm(props: RegisterFormProps) {
       <RegisterFieldsForm {...props} />
       <div className="mt-8 flex flex-col gap-3">
         <DividerWithLabel label="ou entre com outras contas" />
-        <SocialLoginButtons onSelectProvider={props.onSocialRegisterClick} />
+        <SocialLoginButtons isDisabled={props.isSubmitting} onSelectProvider={props.onSocialRegisterClick} />
       </div>
-      <LoginCallToAction />
+      <AuthCallToAction
+        promptText="Já tem conta?"
+        actionLabel="Faça seu login!"
+        to={APP_ROUTES.LOGIN}
+        iconName="login"
+      />
     </section>
   );
 }

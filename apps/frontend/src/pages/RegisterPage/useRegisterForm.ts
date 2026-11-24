@@ -1,44 +1,18 @@
 import { useState, type FormEvent } from 'react';
 import type { RegisterFieldErrors, RegisterFormValues, SocialAuthProvider } from '../../types/auth';
-
-const MIN_PASSWORD_LENGTH = 6;
-const SIMULATED_AUTH_DELAY_MS = 600;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import {
+  SOCIAL_PROVIDER_DISPLAY_NAMES,
+  validateEmail,
+  validateName,
+  validatePassword,
+  waitSimulatedAuth
+} from '../../utils/authValidation';
 
 const INITIAL_REGISTER_VALUES: RegisterFormValues = {
   name: '',
   email: '',
-  password: '',
-  isRememberMeChecked: true
+  password: ''
 };
-
-const PROVIDER_DISPLAY_NAMES: Record<SocialAuthProvider, string> = {
-  github: 'Github',
-  gmail: 'Gmail'
-};
-
-function validateName(name: string): string | undefined {
-  if (!name.trim()) return 'Informe seu nome completo.';
-
-  return undefined;
-}
-
-function validateEmail(email: string): string | undefined {
-  const normalizedEmail = email.trim();
-  if (!normalizedEmail) return 'Informe seu email.';
-  if (!EMAIL_PATTERN.test(normalizedEmail)) return 'Informe um email válido.';
-
-  return undefined;
-}
-
-function validatePassword(password: string): string | undefined {
-  if (!password) return 'Informe sua senha.';
-  if (password.length < MIN_PASSWORD_LENGTH) {
-    return `A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`;
-  }
-
-  return undefined;
-}
 
 function validateRegisterFields(values: RegisterFormValues): RegisterFieldErrors {
   return {
@@ -50,12 +24,6 @@ function validateRegisterFields(values: RegisterFormValues): RegisterFieldErrors
 
 function hasAnyFieldError(errors: RegisterFieldErrors): boolean {
   return Boolean(errors.name || errors.email || errors.password);
-}
-
-function waitSimulatedAuth(): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, SIMULATED_AUTH_DELAY_MS);
-  });
 }
 
 export function useRegisterForm() {
@@ -80,13 +48,11 @@ export function useRegisterForm() {
     setFieldErrors((previous) => ({ ...previous, password: undefined }));
   };
 
-  const toggleRememberMe = () => {
-    setValues((previous) => ({ ...previous, isRememberMeChecked: !previous.isRememberMeChecked }));
-  };
-
   const triggerSocialRegister = (provider: SocialAuthProvider) => {
+    if (isSubmitting) return;
+
     setHasSubmissionError(false);
-    setFeedbackMessage(`Cadastro com ${PROVIDER_DISPLAY_NAMES[provider]} estará disponível em breve.`);
+    setFeedbackMessage(`Cadastro com ${SOCIAL_PROVIDER_DISPLAY_NAMES[provider]} estará disponível em breve.`);
   };
 
   const submitRegisterForm = async (formEvent: FormEvent<HTMLFormElement>) => {
@@ -119,7 +85,6 @@ export function useRegisterForm() {
     updateName,
     updateEmail,
     updatePassword,
-    toggleRememberMe,
     triggerSocialRegister,
     submitRegisterForm
   };

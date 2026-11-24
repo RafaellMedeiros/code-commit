@@ -1,11 +1,11 @@
 import type { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import { APP_ROUTES } from '../../../constants/routes';
 import type { LoginFieldErrors, LoginFormValues, SocialAuthProvider } from '../../../types/auth';
 import { Button } from '../../atoms/Button';
 import { Checkbox } from '../../atoms/Checkbox';
 import { FeedbackMessage } from '../../atoms/FeedbackMessage';
 import { Icon } from '../../atoms/Icon';
+import { AuthCallToAction } from '../../molecules/AuthCallToAction';
 import { AuthFormHeader } from '../../molecules/AuthFormHeader';
 import { DividerWithLabel } from '../../molecules/DividerWithLabel';
 import { FormField } from '../../molecules/FormField';
@@ -25,15 +25,19 @@ export interface LoginFormProps {
   onSubmitForm: (formEvent: FormEvent<HTMLFormElement>) => void;
 }
 
-function LoginOptionsRow({
-  isRememberMeChecked,
-  onToggleRememberMe,
-  onForgotPasswordClick
-}: {
+interface LoginOptionsRowProps {
   isRememberMeChecked: boolean;
+  isSubmitting: boolean;
   onToggleRememberMe: () => void;
   onForgotPasswordClick: () => void;
-}) {
+}
+
+function LoginOptionsRow({
+  isRememberMeChecked,
+  isSubmitting,
+  onToggleRememberMe,
+  onForgotPasswordClick
+}: LoginOptionsRowProps) {
   return (
     <div className="flex items-center justify-between gap-3 pt-0.5">
       <Checkbox
@@ -44,8 +48,9 @@ function LoginOptionsRow({
       />
       <button
         type="button"
+        disabled={isSubmitting}
         onClick={onForgotPasswordClick}
-        className="cursor-pointer text-[15px] text-offwhite underline transition-colors hover:text-highlight-green"
+        className="cursor-pointer text-[15px] text-offwhite underline transition-colors enabled:hover:text-highlight-green disabled:cursor-not-allowed disabled:opacity-60"
       >
         Esqueci a senha
       </button>
@@ -77,6 +82,7 @@ function CredentialsForm(props: LoginFormProps) {
       />
       <LoginOptionsRow
         isRememberMeChecked={props.values.isRememberMeChecked}
+        isSubmitting={props.isSubmitting}
         onToggleRememberMe={props.onToggleRememberMe}
         onForgotPasswordClick={props.onForgotPasswordClick}
       />
@@ -93,21 +99,6 @@ function CredentialsForm(props: LoginFormProps) {
   );
 }
 
-function RegisterCallToAction() {
-  return (
-    <footer className="mt-7 flex flex-col items-center gap-1.5 text-center">
-      <p className="text-[15px] text-offwhite">Ainda não tem conta?</p>
-      <Link
-        to={APP_ROUTES.REGISTER}
-        className="inline-flex items-center gap-2 text-lg font-normal text-highlight-green transition-colors hover:text-highlight-green-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight-green"
-      >
-        <span>Crie seu cadastro!</span>
-        <Icon name="assignment" className="h-5 w-5" />
-      </Link>
-    </footer>
-  );
-}
-
 export function LoginForm(props: LoginFormProps) {
   return (
     <section aria-label="Formulário de login" className="mx-auto w-full max-w-[390px]">
@@ -115,9 +106,14 @@ export function LoginForm(props: LoginFormProps) {
       <CredentialsForm {...props} />
       <div className="mt-8 flex flex-col gap-3">
         <DividerWithLabel label="ou entre com outras contas" />
-        <SocialLoginButtons onSelectProvider={props.onSocialLoginClick} />
+        <SocialLoginButtons isDisabled={props.isSubmitting} onSelectProvider={props.onSocialLoginClick} />
       </div>
-      <RegisterCallToAction />
+      <AuthCallToAction
+        promptText="Ainda não tem conta?"
+        actionLabel="Crie seu cadastro!"
+        to={APP_ROUTES.REGISTER}
+        iconName="assignment"
+      />
     </section>
   );
 }

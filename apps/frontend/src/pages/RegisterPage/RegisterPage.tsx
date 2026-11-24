@@ -1,4 +1,4 @@
-import registerBannerUrl from '../../assets/register-banner.png';
+import registerBannerUrl from '../../assets/register-banner.webp';
 import { AuthBanner } from '../../components/molecules/AuthBanner';
 import { RegisterForm } from '../../components/organisms/RegisterForm';
 import { AuthTemplate } from '../../components/templates/AuthTemplate';
@@ -20,7 +20,6 @@ export function RegisterPage() {
         onNameChange={registerState.updateName}
         onEmailChange={registerState.updateEmail}
         onPasswordChange={registerState.updatePassword}
-        onToggleRememberMe={registerState.toggleRememberMe}
         onSocialRegisterClick={registerState.triggerSocialRegister}
         onSubmitForm={registerState.submitRegisterForm}
       />
