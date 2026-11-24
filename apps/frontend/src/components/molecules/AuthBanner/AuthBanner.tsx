@@ -1,12 +1,22 @@
 import bannerImageUrl from '../../../assets/banner.png';
 import { CodeConnectLogo } from '../../atoms/CodeConnectLogo';
 
-export function AuthBanner() {
+const DEFAULT_BANNER_ALT = 'Pessoa desenvolvendo código em ambiente conectado';
+
+export interface AuthBannerProps {
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+export function AuthBanner({
+  imageSrc = bannerImageUrl,
+  imageAlt = DEFAULT_BANNER_ALT
+}: AuthBannerProps) {
   return (
     <div className="relative mx-auto w-full max-w-[407px] overflow-hidden">
       <img
-        src={bannerImageUrl}
-        alt="Pessoa desenvolvendo código em ambiente conectado"
+        src={imageSrc}
+        alt={imageAlt}
         className="block h-auto w-full object-cover"
       />
       <div
