@@ -5,10 +5,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const BASE_INPUT_CLASSES =
-  'h-10 w-full rounded-[4px] bg-input-surface px-4 text-[15px] text-input-text placeholder:text-[#3e3e3f] transition-shadow focus:outline-none focus:ring-2';
+  'h-10 w-full rounded-[4px] bg-input-surface px-4 text-[15px] text-input-text placeholder:text-input-placeholder transition-shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-card';
 
 const VALID_INPUT_CLASSES = 'focus:ring-highlight-green';
-const INVALID_INPUT_CLASSES = 'ring-2 ring-error focus:ring-error';
+const INVALID_INPUT_CLASSES = 'ring-2 ring-error ring-offset-2 ring-offset-surface-card focus:ring-error';
 
 export function Input({ hasError = false, className = '', ...inputAttributes }: InputProps) {
   const validationClasses = hasError ? INVALID_INPUT_CLASSES : VALID_INPUT_CLASSES;
@@ -16,7 +16,7 @@ export function Input({ hasError = false, className = '', ...inputAttributes }: 
   return (
     <input
       className={`${BASE_INPUT_CLASSES} ${validationClasses} ${className}`.trim()}
-      aria-invalid={hasError}
+      aria-invalid={hasError || undefined}
       {...inputAttributes}
     />
   );

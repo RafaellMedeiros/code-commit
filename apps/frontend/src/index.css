@@ -9,8 +9,9 @@
   --color-highlight-green-hover: #bfffc3;
   --color-offwhite: #e1e1e1;
   --color-muted: #bcbcbc;
-  --color-input-surface: #888888;
+  --color-input-surface: #949494;
   --color-input-text: #171d1f;
+  --color-input-placeholder: #262c2e;
   --color-error: #f87171;
 }
 
@@ -20,5 +21,16 @@
     color: var(--color-offwhite);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

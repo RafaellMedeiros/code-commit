@@ -32,6 +32,11 @@ interface LoginOptionsRowProps {
   onForgotPasswordClick: () => void;
 }
 
+const LOGIN_HEADING_ID = 'login-heading';
+
+const FORGOT_PASSWORD_BUTTON_CLASSES =
+  'min-h-7 cursor-pointer rounded px-1 py-1 text-[15px] text-offwhite underline transition-colors enabled:hover:text-highlight-green focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight-green focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card disabled:cursor-not-allowed disabled:opacity-60';
+
 function LoginOptionsRow({
   isRememberMeChecked,
   isSubmitting,
@@ -50,7 +55,7 @@ function LoginOptionsRow({
         type="button"
         disabled={isSubmitting}
         onClick={onForgotPasswordClick}
-        className="cursor-pointer text-[15px] text-offwhite underline transition-colors enabled:hover:text-highlight-green disabled:cursor-not-allowed disabled:opacity-60"
+        className={FORGOT_PASSWORD_BUTTON_CLASSES}
       >
         Esqueci a senha
       </button>
@@ -66,6 +71,7 @@ function CredentialsForm(props: LoginFormProps) {
         label="Email ou usuário"
         placeholder="usuario123"
         autoComplete="username"
+        isRequired
         value={props.values.identifier}
         errorMessage={props.fieldErrors.identifier}
         onValueChange={props.onIdentifierChange}
@@ -76,6 +82,7 @@ function CredentialsForm(props: LoginFormProps) {
         type="password"
         placeholder="••••••"
         autoComplete="current-password"
+        isRequired
         value={props.values.password}
         errorMessage={props.fieldErrors.password}
         onValueChange={props.onPasswordChange}
@@ -101,8 +108,8 @@ function CredentialsForm(props: LoginFormProps) {
 
 export function LoginForm(props: LoginFormProps) {
   return (
-    <section aria-label="Formulário de login" className="mx-auto w-full max-w-[390px]">
-      <AuthFormHeader title="Login" subtitle="Boas-vindas! Faça seu login." />
+    <section aria-labelledby={LOGIN_HEADING_ID} className="mx-auto w-full max-w-[390px]">
+      <AuthFormHeader headingId={LOGIN_HEADING_ID} title="Login" subtitle="Boas-vindas! Faça seu login." />
       <CredentialsForm {...props} />
       <div className="mt-8 flex flex-col gap-3">
         <DividerWithLabel label="ou entre com outras contas" />

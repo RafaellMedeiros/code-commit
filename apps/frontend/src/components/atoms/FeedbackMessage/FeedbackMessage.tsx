@@ -11,13 +11,20 @@ const TONE_CLASSES: Record<FeedbackTone, string> = {
 };
 
 export function FeedbackMessage({ message, tone = 'success' }: FeedbackMessageProps) {
-  if (!message) return null;
-
-  const liveRegionRole = tone === 'error' ? 'alert' : 'status';
+  const isErrorTone = tone === 'error';
+  const liveRegionRole = isErrorTone ? 'alert' : 'status';
+  const ariaLiveMode = isErrorTone ? 'assertive' : 'polite';
 
   return (
-    <p role={liveRegionRole} className={`rounded-md border px-3 py-2 text-sm ${TONE_CLASSES[tone]}`}>
-      {message}
-    </p>
+    <div
+      role={liveRegionRole}
+      aria-live={ariaLiveMode}
+      aria-atomic="true"
+      className={message ? undefined : 'sr-only'}
+    >
+      {message ? (
+        <p className={`rounded-md border px-3 py-2 text-sm ${TONE_CLASSES[tone]}`}>{message}</p>
+      ) : null}
+    </div>
   );
 }

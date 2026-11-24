@@ -2,11 +2,13 @@ import registerBannerUrl from '../../assets/register-banner.webp';
 import { AuthBanner } from '../../components/molecules/AuthBanner';
 import { RegisterForm } from '../../components/organisms/RegisterForm';
 import { AuthTemplate } from '../../components/templates/AuthTemplate';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useRegisterForm } from './useRegisterForm';
 
 const REGISTER_BANNER_ALT = 'Pessoa desenvolvedora conectada em ambiente digital';
 
 export function RegisterPage() {
+  useDocumentTitle('Cadastro');
   const registerState = useRegisterForm();
 
   return (

@@ -22,6 +22,16 @@ function validateRegisterFields(values: RegisterFormValues): RegisterFieldErrors
   };
 }
 
+function focusFirstInvalidRegisterField(errors: RegisterFieldErrors): void {
+  if (errors.name) {
+    document.getElementById('register-name')?.focus();
+    return;
+  }
+
+  const nextInvalidFieldId = errors.email ? 'register-email' : 'register-password';
+  document.getElementById(nextInvalidFieldId)?.focus();
+}
+
 function hasAnyFieldError(errors: RegisterFieldErrors): boolean {
   return Boolean(errors.name || errors.email || errors.password);
 }
@@ -61,7 +71,10 @@ export function useRegisterForm() {
 
     const validationErrors = validateRegisterFields(values);
     setFieldErrors(validationErrors);
-    if (hasAnyFieldError(validationErrors)) return;
+    if (hasAnyFieldError(validationErrors)) {
+      focusFirstInvalidRegisterField(validationErrors);
+      return;
+    }
 
     setIsSubmitting(true);
     try {

@@ -19,9 +19,13 @@ function ChainSymbol() {
 
 export function CodeConnectLogo({ className = '' }: CodeConnectLogoProps) {
   return (
-    <div className={`inline-flex items-center gap-2 select-none ${className}`} aria-label="Code Connect">
+    <div
+      role="img"
+      aria-label="Code Connect"
+      className={`inline-flex items-center gap-2 select-none ${className}`.trim()}
+    >
       <ChainSymbol />
-      <div className="flex flex-col leading-none">
+      <div className="flex flex-col leading-none" aria-hidden="true">
         <span className="text-[19px] font-light tracking-wide text-muted">code</span>
         <span className="-mt-1 text-[22px] font-normal tracking-tight text-white">connect</span>
       </div>
