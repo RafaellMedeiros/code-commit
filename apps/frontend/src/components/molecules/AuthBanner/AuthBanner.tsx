@@ -1,0 +1,21 @@
+import bannerImageUrl from '../../../assets/banner.png';
+import { CodeConnectLogo } from '../../atoms/CodeConnectLogo';
+
+export function AuthBanner() {
+  return (
+    <div className="relative mx-auto w-full max-w-[407px] overflow-hidden">
+      <img
+        src={bannerImageUrl}
+        alt="Pessoa desenvolvendo código em ambiente conectado"
+        className="block h-auto w-full object-cover"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 via-black/35 to-transparent"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-x-0 bottom-5 flex justify-center">
+        <CodeConnectLogo />
+      </div>
+    </div>
+  );
+}

@@ -1,42 +1,24 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #e2e8f0;
-  background-color: #0f172a;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Prompt", system-ui, -apple-system, sans-serif;
+  --color-graphite: #01080e;
+  --color-surface-card: #171d1f;
+  --color-petrol: #132e35;
+  --color-highlight-green: #81fe88;
+  --color-highlight-green-hover: #bfffc3;
+  --color-offwhite: #e1e1e1;
+  --color-muted: #bcbcbc;
+  --color-input-surface: #888888;
+  --color-input-text: #171d1f;
+  --color-error: #f87171;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  justify-content: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.card {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border-radius: 12px;
-  background-color: #1e293b;
-  border: 1px solid #334155;
-}
-
-.status-box {
-  text-align: left;
-  background: #0f172a;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.error {
-  color: #f87171;
+@layer base {
+  body {
+    background-color: var(--color-graphite);
+    color: var(--color-offwhite);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
 }
