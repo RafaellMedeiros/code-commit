@@ -1,34 +1,17 @@
 import { useState, type FormEvent } from 'react';
 import type { LoginFieldErrors, LoginFormValues, SocialAuthProvider } from '../../types/auth';
-
-const MIN_PASSWORD_LENGTH = 6;
-const SIMULATED_AUTH_DELAY_MS = 600;
+import {
+  SOCIAL_PROVIDER_DISPLAY_NAMES,
+  validateIdentifier,
+  validatePassword,
+  waitSimulatedAuth
+} from '../../utils/authValidation';
 
 const INITIAL_LOGIN_VALUES: LoginFormValues = {
   identifier: '',
   password: '',
   isRememberMeChecked: true
 };
-
-const PROVIDER_DISPLAY_NAMES: Record<SocialAuthProvider, string> = {
-  github: 'Github',
-  gmail: 'Gmail'
-};
-
-function validateIdentifier(identifier: string): string | undefined {
-  if (!identifier.trim()) return 'Informe seu email ou nome de usuário.';
-
-  return undefined;
-}
-
-function validatePassword(password: string): string | undefined {
-  if (!password) return 'Informe sua senha.';
-  if (password.length < MIN_PASSWORD_LENGTH) {
-    return `A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`;
-  }
-
-  return undefined;
-}
 
 function validateLoginFields(values: LoginFormValues): LoginFieldErrors {
   return {
@@ -39,12 +22,6 @@ function validateLoginFields(values: LoginFormValues): LoginFieldErrors {
 
 function hasAnyFieldError(errors: LoginFieldErrors): boolean {
   return Boolean(errors.identifier || errors.password);
-}
-
-function waitSimulatedAuth(): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, SIMULATED_AUTH_DELAY_MS);
-  });
 }
 
 export function useLoginForm() {
@@ -69,13 +46,17 @@ export function useLoginForm() {
   };
 
   const notifyForgotPassword = () => {
+    if (isSubmitting) return;
+
     setHasSubmissionError(false);
     setFeedbackMessage('A recuperação de senha estará disponível em breve.');
   };
 
   const triggerSocialLogin = (provider: SocialAuthProvider) => {
+    if (isSubmitting) return;
+
     setHasSubmissionError(false);
-    setFeedbackMessage(`Autenticação com ${PROVIDER_DISPLAY_NAMES[provider]} estará disponível em breve.`);
+    setFeedbackMessage(`Autenticação com ${SOCIAL_PROVIDER_DISPLAY_NAMES[provider]} estará disponível em breve.`);
   };
 
   const submitLoginForm = async (formEvent: FormEvent<HTMLFormElement>) => {
