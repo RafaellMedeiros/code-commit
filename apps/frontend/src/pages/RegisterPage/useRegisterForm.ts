@@ -67,12 +67,14 @@ export function useRegisterForm() {
 
   const submitRegisterForm = async (formEvent: FormEvent<HTMLFormElement>) => {
     formEvent.preventDefault();
+    if (isSubmitting) return;
+
     setFeedbackMessage(null);
 
     const validationErrors = validateRegisterFields(values);
     setFieldErrors(validationErrors);
     if (hasAnyFieldError(validationErrors)) {
-      focusFirstInvalidRegisterField(validationErrors);
+      requestAnimationFrame(() => focusFirstInvalidRegisterField(validationErrors));
       return;
     }
 

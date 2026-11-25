@@ -80,7 +80,7 @@ export function RegisterForm(props: RegisterFormProps) {
       <AuthFormHeader headingId={REGISTER_HEADING_ID} title="Cadastro" subtitle="Olá! Preencha seus dados." />
       <RegisterFieldsForm {...props} />
       <div className="mt-8 flex flex-col gap-3">
-        <DividerWithLabel label="ou entre com outras contas" />
+        <DividerWithLabel label="ou cadastre-se com outras contas" />
         <SocialLoginButtons
           isDisabled={props.isSubmitting}
           actionPrefix="Cadastrar com"

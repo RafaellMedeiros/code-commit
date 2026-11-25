@@ -16,7 +16,7 @@ export function AuthTemplate({ bannerSlot, children }: AuthTemplateProps) {
       <main
         id={MAIN_CONTENT_ID}
         tabIndex={-1}
-        className="relative flex min-h-screen w-full items-center justify-center overflow-x-clip bg-graphite px-4 py-8 focus:outline-none sm:px-8"
+        className="relative flex min-h-screen w-full items-center justify-center overflow-clip bg-graphite px-4 py-8 focus:outline-none sm:px-8"
       >
         <img
           src={appendixBackgroundUrl}

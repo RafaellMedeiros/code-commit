@@ -42,6 +42,11 @@ export function FormField({
     <div className="flex flex-col">
       <label htmlFor={id} className="mb-1.5 text-base font-normal text-offwhite">
         {label}
+        {isRequired ? (
+          <span aria-hidden="true" className="ml-0.5 text-error">
+            *
+          </span>
+        ) : null}
       </label>
       <Input
         id={id}
@@ -50,7 +55,6 @@ export function FormField({
         value={value}
         autoComplete={autoComplete}
         required={isRequired}
-        aria-required={isRequired || undefined}
         hasError={Boolean(errorMessage)}
         aria-describedby={describedByIds}
         onChange={handleInputChange}
@@ -61,7 +65,7 @@ export function FormField({
         </p>
       ) : null}
       {errorMessage ? (
-        <p id={errorElementId} role="alert" className="mt-1 text-xs text-error">
+        <p id={errorElementId} className="mt-1 text-xs text-error">
           {errorMessage}
         </p>
       ) : null}

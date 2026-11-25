@@ -66,12 +66,14 @@ export function useLoginForm() {
 
   const submitLoginForm = async (formEvent: FormEvent<HTMLFormElement>) => {
     formEvent.preventDefault();
+    if (isSubmitting) return;
+
     setFeedbackMessage(null);
 
     const validationErrors = validateLoginFields(values);
     setFieldErrors(validationErrors);
     if (hasAnyFieldError(validationErrors)) {
-      focusFirstInvalidLoginField(validationErrors);
+      requestAnimationFrame(() => focusFirstInvalidLoginField(validationErrors));
       return;
     }
 
