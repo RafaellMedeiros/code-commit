@@ -56,3 +56,6 @@ Desktop.ini
 # Arquivos temporários
 tmp/
 temp/
+
+# Relatórios locais de auditoria
+lighthouse*.json
