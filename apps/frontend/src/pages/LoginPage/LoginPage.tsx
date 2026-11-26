@@ -4,8 +4,12 @@ import { AuthTemplate } from '../../components/templates/AuthTemplate';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useLoginForm } from './useLoginForm';
 
+const LOGIN_PAGE_TITLE = 'Login';
+const LOGIN_PAGE_DESCRIPTION =
+  'Acesse sua conta no Code Connect para compartilhar projetos, códigos e colaborar com a comunidade dev.';
+
 export function LoginPage() {
-  useDocumentTitle('Login');
+  useDocumentTitle(LOGIN_PAGE_TITLE, LOGIN_PAGE_DESCRIPTION);
   const loginState = useLoginForm();
 
   return (
