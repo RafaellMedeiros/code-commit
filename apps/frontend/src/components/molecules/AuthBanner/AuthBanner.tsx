@@ -1,6 +1,6 @@
-import bannerImageUrl from '../../../assets/banner.webp';
 import { CodeConnectLogo } from '../../atoms/CodeConnectLogo';
 
+const DEFAULT_BANNER_IMAGE_SRC = '/images/banner.webp';
 const DEFAULT_BANNER_ALT = 'Pessoa desenvolvendo código em ambiente conectado';
 const BANNER_WIDTH_PX = 407;
 const BANNER_HEIGHT_PX = 628;
@@ -11,7 +11,7 @@ export interface AuthBannerProps {
 }
 
 export function AuthBanner({
-  imageSrc = bannerImageUrl,
+  imageSrc = DEFAULT_BANNER_IMAGE_SRC,
   imageAlt = DEFAULT_BANNER_ALT
 }: AuthBannerProps) {
   return (
@@ -21,6 +21,8 @@ export function AuthBanner({
         alt={imageAlt}
         width={BANNER_WIDTH_PX}
         height={BANNER_HEIGHT_PX}
+        fetchpriority="high"
+        decoding="async"
         className="block h-full w-full object-cover"
       />
       <div

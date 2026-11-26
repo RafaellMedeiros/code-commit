@@ -12,13 +12,30 @@ interface SocialProviderOption {
   id: SocialAuthProvider;
   label: string;
   iconUrl: string;
+  iconWidth: number;
+  iconHeight: number;
 }
 
 const DEFAULT_ACTION_PREFIX = 'Entrar com';
+const GITHUB_ICON_WIDTH_PX = 33;
+const GITHUB_ICON_HEIGHT_PX = 32;
+const GMAIL_ICON_SIZE_PX = 28;
 
 const SOCIAL_PROVIDER_OPTIONS: readonly SocialProviderOption[] = [
-  { id: 'github', label: 'Github', iconUrl: githubLogoUrl },
-  { id: 'gmail', label: 'Gmail', iconUrl: gmailLogoUrl }
+  {
+    id: 'github',
+    label: 'Github',
+    iconUrl: githubLogoUrl,
+    iconWidth: GITHUB_ICON_WIDTH_PX,
+    iconHeight: GITHUB_ICON_HEIGHT_PX
+  },
+  {
+    id: 'gmail',
+    label: 'Gmail',
+    iconUrl: gmailLogoUrl,
+    iconWidth: GMAIL_ICON_SIZE_PX,
+    iconHeight: GMAIL_ICON_SIZE_PX
+  }
 ];
 
 const SOCIAL_BUTTON_CLASSES =
@@ -41,7 +58,15 @@ export function SocialLoginButtons({
           className={SOCIAL_BUTTON_CLASSES}
         >
           <span className="flex h-8 w-8 items-center justify-center">
-            <img src={provider.iconUrl} alt="" aria-hidden="true" className="max-h-8 max-w-8 object-contain" />
+            <img
+              src={provider.iconUrl}
+              alt=""
+              aria-hidden="true"
+              width={provider.iconWidth}
+              height={provider.iconHeight}
+              decoding="async"
+              className="max-h-8 max-w-8 object-contain"
+            />
           </span>
           <span className="text-[13px] text-offwhite transition-colors group-enabled:group-hover:text-highlight-green">
             {provider.label}
