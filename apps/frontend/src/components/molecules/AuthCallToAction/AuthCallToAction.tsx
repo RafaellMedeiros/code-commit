@@ -9,7 +9,7 @@ export interface AuthCallToActionProps {
 }
 
 const ACTION_LINK_CLASSES =
-  'inline-flex items-center gap-2 text-lg font-normal text-highlight-green transition-colors hover:text-highlight-green-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight-green';
+  'inline-flex min-h-7 items-center gap-2 rounded px-2 py-1 text-lg font-normal text-highlight-green transition-colors hover:text-highlight-green-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-highlight-green focus-visible:ring-offset-2 focus-visible:ring-offset-surface-card';
 
 export function AuthCallToAction({ promptText, actionLabel, to, iconName }: AuthCallToActionProps) {
   return (

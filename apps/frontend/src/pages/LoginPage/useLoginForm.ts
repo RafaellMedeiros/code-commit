@@ -20,6 +20,11 @@ function validateLoginFields(values: LoginFormValues): LoginFieldErrors {
   };
 }
 
+function focusFirstInvalidLoginField(errors: LoginFieldErrors): void {
+  const firstInvalidFieldId = errors.identifier ? 'login-identifier' : 'login-password';
+  document.getElementById(firstInvalidFieldId)?.focus();
+}
+
 function hasAnyFieldError(errors: LoginFieldErrors): boolean {
   return Boolean(errors.identifier || errors.password);
 }
@@ -61,11 +66,16 @@ export function useLoginForm() {
 
   const submitLoginForm = async (formEvent: FormEvent<HTMLFormElement>) => {
     formEvent.preventDefault();
+    if (isSubmitting) return;
+
     setFeedbackMessage(null);
 
     const validationErrors = validateLoginFields(values);
     setFieldErrors(validationErrors);
-    if (hasAnyFieldError(validationErrors)) return;
+    if (hasAnyFieldError(validationErrors)) {
+      requestAnimationFrame(() => focusFirstInvalidLoginField(validationErrors));
+      return;
+    }
 
     setIsSubmitting(true);
     try {

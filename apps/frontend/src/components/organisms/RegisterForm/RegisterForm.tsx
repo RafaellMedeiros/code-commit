@@ -23,6 +23,8 @@ export interface RegisterFormProps {
   onSubmitForm: (formEvent: FormEvent<HTMLFormElement>) => void;
 }
 
+const REGISTER_HEADING_ID = 'register-heading';
+
 function RegisterFieldsForm(props: RegisterFormProps) {
   return (
     <form onSubmit={props.onSubmitForm} noValidate className="flex flex-col gap-4">
@@ -31,6 +33,7 @@ function RegisterFieldsForm(props: RegisterFormProps) {
         label="Nome"
         placeholder="Nome completo"
         autoComplete="name"
+        isRequired
         value={props.values.name}
         errorMessage={props.fieldErrors.name}
         onValueChange={props.onNameChange}
@@ -41,6 +44,7 @@ function RegisterFieldsForm(props: RegisterFormProps) {
         type="email"
         placeholder="Digite seu email"
         autoComplete="email"
+        isRequired
         value={props.values.email}
         errorMessage={props.fieldErrors.email}
         onValueChange={props.onEmailChange}
@@ -50,7 +54,9 @@ function RegisterFieldsForm(props: RegisterFormProps) {
         label="Senha"
         type="password"
         placeholder="••••••"
+        hint="Mínimo de 6 caracteres."
         autoComplete="new-password"
+        isRequired
         value={props.values.password}
         errorMessage={props.fieldErrors.password}
         onValueChange={props.onPasswordChange}
@@ -70,12 +76,16 @@ function RegisterFieldsForm(props: RegisterFormProps) {
 
 export function RegisterForm(props: RegisterFormProps) {
   return (
-    <section aria-label="Formulário de cadastro" className="mx-auto w-full max-w-[390px]">
-      <AuthFormHeader title="Cadastro" subtitle="Olá! Preencha seus dados." />
+    <section aria-labelledby={REGISTER_HEADING_ID} className="mx-auto w-full max-w-[390px]">
+      <AuthFormHeader headingId={REGISTER_HEADING_ID} title="Cadastro" subtitle="Olá! Preencha seus dados." />
       <RegisterFieldsForm {...props} />
       <div className="mt-8 flex flex-col gap-3">
-        <DividerWithLabel label="ou entre com outras contas" />
-        <SocialLoginButtons isDisabled={props.isSubmitting} onSelectProvider={props.onSocialRegisterClick} />
+        <DividerWithLabel label="ou cadastre-se com outras contas" />
+        <SocialLoginButtons
+          isDisabled={props.isSubmitting}
+          actionPrefix="Cadastrar com"
+          onSelectProvider={props.onSocialRegisterClick}
+        />
       </div>
       <AuthCallToAction
         promptText="Já tem conta?"

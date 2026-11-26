@@ -1,9 +1,11 @@
 import { AuthBanner } from '../../components/molecules/AuthBanner';
 import { LoginForm } from '../../components/organisms/LoginForm';
 import { AuthTemplate } from '../../components/templates/AuthTemplate';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useLoginForm } from './useLoginForm';
 
 export function LoginPage() {
+  useDocumentTitle('Login');
   const loginState = useLoginForm();
 
   return (
